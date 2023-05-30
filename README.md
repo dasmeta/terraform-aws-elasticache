@@ -1,14 +1,16 @@
-# terraform-aws-account
+# terraform-aws-elasticache
 
-## this module allows to configure aws account level resources which are not part to specific environment/application and are global impact on aws
+## this module allows to create aws elasticache/redis cluster
 
 ## basic example
 ```hcl
-module "account" {
-  source  = "dasmeta/account/aws"
+module "redis" {
+  source  = "dasmeta/elasticache/aws"
   version = "x.y.z"
 
-  create_cloudwatch_log_role = true
+  name         = "test-redis"
+  vpc_id       = {aws-vpc-id}
+  subnet_ids   = {aws-subnet-ids}
 }
 ```
 

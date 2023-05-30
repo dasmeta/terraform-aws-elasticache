@@ -1,16 +1,15 @@
 module "alerts" {
-  # source = "/home/tigran/projects/devops/dasmeta/terraform-aws-monitoring/modules/alerts"
   source  = "dasmeta/monitoring/aws//modules/alerts"
-  version = "1.5.6"
+  version = "1.5.7"
 
   count = try(var.alarms.enabled, false) ? local.member_clusters_count : 0
-  # for_each = { for key, cluster_name in tolist(module.redis.member_clusters[0]) : cluster_name => cluster_name if try(var.alarms.enabled, false) }
 
   sns_topic = var.alarms.topic
 
   alerts = [
     {
-      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node cpu is overloaded (>${var.alarms.threshold}%)"
+      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
+      description         = "Redis Cluster CPU state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/CPUUtilization"
       comparison_operator = "gt"
       statistic           = "avg"
@@ -20,7 +19,8 @@ module "alerts" {
       }
     },
     {
-      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory is overloaded (>${var.alarms.threshold}%)"
+      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
+      description         = "Redis Cluster Memory state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/DatabaseMemoryUsagePercentage"
       comparison_operator = "gt"
       statistic           = "avg"

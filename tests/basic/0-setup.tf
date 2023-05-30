@@ -26,12 +26,13 @@ provider "aws" {
 
 module "vpc" {
   source  = "dasmeta/vpc/aws"
-  version = "1.0.0"
+  version = "1.0.1"
 
   name = "elasticache-test"
   cidr = "10.26.0.0/16"
 
+
   availability_zones = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-  private_subnets    = ["10.16.1.0/24", "10.16.2.0/24", "10.16.3.0/24"]
-  public_subnets     = ["10.16.4.0/24", "10.16.5.0/24", "10.16.6.0/24"]
+  private_subnets    = ["10.26.1.0/24", "10.26.2.0/24", "10.26.3.0/24"]
+  public_subnets     = ["10.26.4.0/24", "10.26.5.0/24", "10.26.6.0/24"]
 }

@@ -19,4 +19,13 @@ module "redis" {
   cluster_mode_enabled                 = var.cluster_mode_enabled
   cluster_mode_num_node_groups         = var.cluster_mode_num_node_groups
   cluster_mode_replicas_per_node_group = var.cluster_mode_replicas_per_node_group
+  create_security_group                = var.create_security_group
+  associated_security_group_ids        = var.associated_security_group_ids
+  elasticache_subnet_group_name        = var.elasticache_subnet_group_name
+  log_delivery_configuration           = var.log_delivery_configuration
+  snapshot_arns                        = var.snapshot_arns
+  snapshot_name                        = var.snapshot_name
+  snapshot_window                      = var.snapshot_window
+  snapshot_retention_limit             = var.snapshot_retention_limit
+  final_snapshot_identifier            = var.final_snapshot_identifier
 }

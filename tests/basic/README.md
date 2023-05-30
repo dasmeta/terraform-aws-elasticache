@@ -19,7 +19,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_this"></a> [this](#module\_this) | ../../ | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | dasmeta/vpc/aws | 1.0.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | dasmeta/vpc/aws | 1.0.1 |
 
 ## Resources
 

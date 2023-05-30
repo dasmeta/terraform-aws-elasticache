@@ -9,7 +9,7 @@ output "security_group_id" {
 }
 
 output "security_group_name" {
-  value       = module.redis.name
+  value       = module.redis.security_group_name
   description = "The name of the created security group"
 }
 

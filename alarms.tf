@@ -1,6 +1,6 @@
 module "alerts" {
   source  = "dasmeta/monitoring/aws//modules/alerts"
-  version = "1.5.7"
+  version = "1.9.4"
 
   count = try(var.alarms.enabled, false) ? local.member_clusters_count : 0
 

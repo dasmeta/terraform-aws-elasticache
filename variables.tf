@@ -157,8 +157,8 @@ variable "final_snapshot_identifier" {
 
 variable "alarms" {
   type = object({
-    enabled   = optional(bool, false)
-    topic     = optional(string, "account-alarms-handling")
+    enabled   = bool
+    topic     = string
     threshold = optional(number, 95) # in percents
   })
   default     = null

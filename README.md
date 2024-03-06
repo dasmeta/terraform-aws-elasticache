@@ -41,7 +41,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu threshold(the default is 95) crosses | <pre>object({<br>    enabled   = optional(bool, false)<br>    topic     = optional(string, "account-alarms-handling")<br>    threshold = optional(number, 95) # in percents<br>  })</pre> | `null` | no |
+| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu threshold(the default is 95) crosses | <pre>object({<br>    enabled   = bool<br>    topic     = string<br>    threshold = optional(number, 95) # in percents<br>  })</pre> | `null` | no |
 | <a name="input_allowed_security_group_ids"></a> [allowed\_security\_group\_ids](#input\_allowed\_security\_group\_ids) | The security groups which allowed-to/opened access redis cluster | `list(string)` | `[]` | no |
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Whether to apply the changes immediately | `bool` | `true` | no |
 | <a name="input_associated_security_group_ids"></a> [associated\_security\_group\_ids](#input\_associated\_security\_group\_ids) | Security group ids to associate/use for in case you have them created already and do not want to use new created one by setting create\_security\_group=false | `list(string)` | `[]` | no |

@@ -157,10 +157,9 @@ variable "final_snapshot_identifier" {
 
 variable "alarms" {
   type = object({
-    enabled   = optional(bool, false)
-    topic     = optional(string, "account-alarms-handling")
-    threshold = optional(number, 95) # in percents
+    enabled       = optional(bool, true)
+    topic         = string
+    custom_values = optional(any, {})
   })
-  default     = null
-  description = "Monitor cluster redis nodes and send alarm to specified topic if memory/cpu threshold(the default is 95) crosses"
+  description = "Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connecions crosses"
 }

@@ -11,9 +11,10 @@ module "alerts" {
       name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
       description         = "Redis Cluster CPU state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/CPUUtilization"
-      comparison_operator = "gt"
-      statistic           = "avg"
-      threshold           = var.alarms.threshold
+      comparison_operator = try(var.alarms.custom_values.cpu.comparison_operator, "gt")
+      statistic           = try(var.alarms.custom_values.cpu.statistic, "avg")
+      threshold           = try(var.alarms.custom_values.cpu.threshold, 95)
+      period              = try(var.alarms.custom_values.cpu.period, 300)
       filters = {
         CacheClusterId = element(tolist(module.redis.member_clusters[0]), count.index)
       }
@@ -22,12 +23,25 @@ module "alerts" {
       name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
       description         = "Redis Cluster Memory state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/DatabaseMemoryUsagePercentage"
-      comparison_operator = "gt"
-      statistic           = "avg"
-      threshold           = var.alarms.threshold
+      comparison_operator = try(var.alarms.custom_values.memory.comparison_operator, "gt")
+      statistic           = try(var.alarms.custom_values.memory.statistic, "avg")
+      threshold           = try(var.alarms.custom_values.memory.threshold, 95)
+      period              = try(var.alarms.custom_values.memory.period, 300)
       filters = {
         CacheClusterId = element(tolist(module.redis.member_clusters[0]), count.index)
       }
-    }
+    },
+    {
+      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} connection increased."
+      description         = "Redis Cluster Connections monitoring. Check 'Current State' and Reason in notification for details."
+      source              = "AWS/ElastiCache/DatabaseMemoryUsagePercentage"
+      comparison_operator = try(var.alarms.custom_values.connections.comparison_operator, "gt")
+      statistic           = try(var.alarms.custom_values.connections.statistic, "avg")
+      threshold           = try(var.alarms.custom_values.connections.threshold, 100)
+      period              = try(var.alarms.custom_values.connections.period, 300)
+      filters = {
+        CacheClusterId = element(tolist(module.redis.member_clusters[0]), count.index)
+      }
+    },
   ]
 }

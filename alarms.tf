@@ -2,10 +2,8 @@ module "alerts" {
   source  = "dasmeta/monitoring/aws//modules/alerts"
   version = "1.5.7"
 
-  count = try(var.alarms.enabled, false) ? local.member_clusters_count : 0
-
+  count     = try(var.alarms.enabled, false) ? local.member_clusters_count : 0
   sns_topic = var.alarms.topic
-
   alerts = [
     {
       name                = "Redis: High CPU Utilization on ${var.name}-00${count.index + 1} Node in ${var.name} Cluster."

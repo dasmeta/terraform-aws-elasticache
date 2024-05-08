@@ -8,7 +8,7 @@ module "alerts" {
 
   alerts = [
     {
-      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
+      name                = "Redis: High CPU Utilization on ${var.name}-00${count.index + 1} Node in ${var.name} Cluster."
       description         = "Redis Cluster CPU state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/CPUUtilization"
       comparison_operator = try(var.alarms.custom_values.cpu.comparison_operator, "gt")
@@ -20,7 +20,7 @@ module "alerts" {
       }
     },
     {
-      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} node memory usage state changed."
+      name                = "Redis: High Memory Usage on ${var.name}-00${count.index + 1} Node in ${var.name} Cluster."
       description         = "Redis Cluster Memory state monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/DatabaseMemoryUsagePercentage"
       comparison_operator = try(var.alarms.custom_values.memory.comparison_operator, "gt")
@@ -32,7 +32,7 @@ module "alerts" {
       }
     },
     {
-      name                = "${var.name} Redis cluster ${var.name}-00${count.index + 1} connection increased."
+      name                = "Redis: High Connection Usage on ${var.name}-00${count.index + 1} Node in ${var.name} Cluster."
       description         = "Redis Cluster Connections monitoring. Check 'Current State' and Reason in notification for details."
       source              = "AWS/ElastiCache/DatabaseMemoryUsagePercentage"
       comparison_operator = try(var.alarms.custom_values.connections.comparison_operator, "gt")

@@ -2,8 +2,8 @@ module "alarms" {
   source = "../../"
 
   member_clusters_count = 1
-  cacheclusterids       = ["casino"]
-  name                  = "casino"
+  cacheclusterids       = ["dasmeta"]
+  name                  = "dasmeta"
 
   alarms = {
     enabled = true

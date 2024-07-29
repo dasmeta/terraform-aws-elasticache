@@ -30,7 +30,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alerts"></a> [alerts](#module\_alerts) | dasmeta/monitoring/aws//modules/alerts | 1.5.7 |
+| <a name="module_alarms"></a> [alarms](#module\_alarms) | ./modules/alarms/ | n/a |
 | <a name="module_redis"></a> [redis](#module\_redis) | cloudposse/elasticache-redis/aws | 0.51.0 |
 
 ## Resources

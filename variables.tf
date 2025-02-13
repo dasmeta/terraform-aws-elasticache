@@ -52,13 +52,13 @@ variable "automatic_failover_enabled" {
 
 variable "engine_version" {
   type        = string
-  default     = "6.2"
+  default     = "7.1"
   description = "The version of redis engine"
 }
 
 variable "family" {
   type        = string
-  default     = "redis6.x"
+  default     = "redis7"
   description = "The family of the ElastiCache parameter group"
 }
 
@@ -71,7 +71,7 @@ variable "at_rest_encryption_enabled" {
 variable "transit_encryption_enabled" {
   type        = bool
   default     = false
-  description = "Whether to enable encryption in transit"
+  description = "Whether to enable encryption in transit (tls/ssl)"
 }
 
 variable "parameters" {
@@ -155,11 +155,23 @@ variable "final_snapshot_identifier" {
   default     = null
 }
 
+variable "auth_token" {
+  type        = string
+  description = "Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` if you need to have `var.auth_token` password be applied/set"
+  default     = null
+}
+
+variable "additional_security_group_rules" {
+  type        = list(any)
+  default     = []
+  description = "A list of Security Group rule objects to add to the created security group, in addition to the ones this module normally creates"
+}
+
 variable "alarms" {
   type = object({
     enabled       = optional(bool, true)
     topic         = string
     custom_values = optional(any, {})
   })
-  description = "Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connecions crosses"
+  description = "Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connections crosses"
 }

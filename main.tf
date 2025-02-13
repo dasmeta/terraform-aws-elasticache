@@ -1,6 +1,6 @@
 module "redis" {
   source  = "cloudposse/elasticache-redis/aws"
-  version = "0.51.0"
+  version = "1.9.0"
 
   name                                 = var.name
   vpc_id                               = var.vpc_id
@@ -28,4 +28,6 @@ module "redis" {
   snapshot_window                      = var.snapshot_window
   snapshot_retention_limit             = var.snapshot_retention_limit
   final_snapshot_identifier            = var.final_snapshot_identifier
+  auth_token                           = var.auth_token
+  additional_security_group_rules      = var.additional_security_group_rules
 }

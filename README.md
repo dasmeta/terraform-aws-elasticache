@@ -20,7 +20,7 @@ module "redis" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.67 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.47, < 6.0.0 |
 
 ## Providers
 
@@ -31,7 +31,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_alarms"></a> [alarms](#module\_alarms) | ./modules/alarms/ | n/a |
-| <a name="module_redis"></a> [redis](#module\_redis) | cloudposse/elasticache-redis/aws | 0.51.0 |
+| <a name="module_redis"></a> [redis](#module\_redis) | cloudposse/elasticache-redis/aws | 1.9.0 |
 
 ## Resources
 
@@ -41,11 +41,13 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connecions crosses | <pre>object({<br>    enabled       = optional(bool, true)<br>    topic         = string<br>    custom_values = optional(any, {})<br>  })</pre> | n/a | yes |
+| <a name="input_additional_security_group_rules"></a> [additional\_security\_group\_rules](#input\_additional\_security\_group\_rules) | A list of Security Group rule objects to add to the created security group, in addition to the ones this module normally creates | `list(any)` | `[]` | no |
+| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connections crosses | <pre>object({<br>    enabled       = optional(bool, true)<br>    topic         = string<br>    custom_values = optional(any, {})<br>  })</pre> | n/a | yes |
 | <a name="input_allowed_security_group_ids"></a> [allowed\_security\_group\_ids](#input\_allowed\_security\_group\_ids) | The security groups which allowed-to/opened access redis cluster | `list(string)` | `[]` | no |
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Whether to apply the changes immediately | `bool` | `true` | no |
 | <a name="input_associated_security_group_ids"></a> [associated\_security\_group\_ids](#input\_associated\_security\_group\_ids) | Security group ids to associate/use for in case you have them created already and do not want to use new created one by setting create\_security\_group=false | `list(string)` | `[]` | no |
 | <a name="input_at_rest_encryption_enabled"></a> [at\_rest\_encryption\_enabled](#input\_at\_rest\_encryption\_enabled) | Whether to enable encryption at rest | `bool` | `false` | no |
+| <a name="input_auth_token"></a> [auth\_token](#input\_auth\_token) | Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` if you need to have `var.auth_token` password be applied/set | `string` | `null` | no |
 | <a name="input_automatic_failover_enabled"></a> [automatic\_failover\_enabled](#input\_automatic\_failover\_enabled) | Whether to enable failover | `bool` | `true` | no |
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | The list of availability zones which will be used for creating redis cluster | `list(string)` | `[]` | no |
 | <a name="input_cluster_mode_enabled"></a> [cluster\_mode\_enabled](#input\_cluster\_mode\_enabled) | Whether to creation native redis cluster | `bool` | `false` | no |
@@ -54,8 +56,8 @@ No resources.
 | <a name="input_cluster_size"></a> [cluster\_size](#input\_cluster\_size) | Number of nodes in cluster | `string` | `2` | no |
 | <a name="input_create_security_group"></a> [create\_security\_group](#input\_create\_security\_group) | Whether to create new security group. If false, associated\_security\_group\_ids must be provided. | `bool` | `true` | no |
 | <a name="input_elasticache_subnet_group_name"></a> [elasticache\_subnet\_group\_name](#input\_elasticache\_subnet\_group\_name) | Subnet group name to use for Redis cluster, to not generate new one | `string` | `""` | no |
-| <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The version of redis engine | `string` | `"6.2"` | no |
-| <a name="input_family"></a> [family](#input\_family) | The family of the ElastiCache parameter group | `string` | `"redis6.x"` | no |
+| <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The version of redis engine | `string` | `"7.1"` | no |
+| <a name="input_family"></a> [family](#input\_family) | The family of the ElastiCache parameter group | `string` | `"redis7"` | no |
 | <a name="input_final_snapshot_identifier"></a> [final\_snapshot\_identifier](#input\_final\_snapshot\_identifier) | The name of your final node group (shard) snapshot. ElastiCache creates the snapshot from the primary node in the cluster. If omitted, no final snapshot will be made. | `string` | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The nodes instance type in cluster | `string` | `"cache.t2.micro"` | no |
 | <a name="input_log_delivery_configuration"></a> [log\_delivery\_configuration](#input\_log\_delivery\_configuration) | Allows configure Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks. | `list(map(any))` | `[]` | no |
@@ -66,7 +68,7 @@ No resources.
 | <a name="input_snapshot_retention_limit"></a> [snapshot\_retention\_limit](#input\_snapshot\_retention\_limit) | The number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. | `number` | `0` | no |
 | <a name="input_snapshot_window"></a> [snapshot\_window](#input\_snapshot\_window) | The daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. | `string` | `"06:30-07:30"` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnet ids which will be used for creating redis cluster | `list(string)` | `[]` | no |
-| <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit | `bool` | `false` | no |
+| <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit (tls/ssl) | `bool` | `false` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The vpc where redis cluster will be created | `string` | n/a | yes |
 
 ## Outputs

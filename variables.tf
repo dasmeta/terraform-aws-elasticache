@@ -77,7 +77,7 @@ variable "transit_encryption_enabled" {
 variable "transit_encryption_mode" {
   type        = string
   default     = null
-  description = "This option being used to migrate to in-transit encryption(var.transit_encryption_enabled=true) with no downtime. It is required to set this attribute when we enable in-transit encryption on existing cluster. Valid values are preferred and required."
+  description = "This option being used to migrate to in-transit encryption(var.transit_encryption_enabled=true) with no downtime. It is required to set this attribute when we enable in-transit encryption on existing cluster. Valid values are 'preferred' and 'required'. In case of if we also need to set auth_token then the value of this option should be set 'required'"
 }
 
 variable "parameters" {

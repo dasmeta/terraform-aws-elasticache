@@ -47,7 +47,7 @@ No resources.
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Whether to apply the changes immediately | `bool` | `true` | no |
 | <a name="input_associated_security_group_ids"></a> [associated\_security\_group\_ids](#input\_associated\_security\_group\_ids) | Security group ids to associate/use for in case you have them created already and do not want to use new created one by setting create\_security\_group=false | `list(string)` | `[]` | no |
 | <a name="input_at_rest_encryption_enabled"></a> [at\_rest\_encryption\_enabled](#input\_at\_rest\_encryption\_enabled) | Whether to enable encryption at rest | `bool` | `false` | no |
-| <a name="input_auth_token"></a> [auth\_token](#input\_auth\_token) | Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` if you need to have `var.auth_token` password be applied/set | `string` | `null` | no |
+| <a name="input_auth_token"></a> [auth\_token](#input\_auth\_token) | Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` prior(already in place) if you need to have `var.auth_token` password be applied/set | `string` | `null` | no |
 | <a name="input_automatic_failover_enabled"></a> [automatic\_failover\_enabled](#input\_automatic\_failover\_enabled) | Whether to enable failover | `bool` | `true` | no |
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | The list of availability zones which will be used for creating redis cluster | `list(string)` | `[]` | no |
 | <a name="input_cluster_mode_enabled"></a> [cluster\_mode\_enabled](#input\_cluster\_mode\_enabled) | Whether to creation native redis cluster | `bool` | `false` | no |
@@ -68,7 +68,8 @@ No resources.
 | <a name="input_snapshot_retention_limit"></a> [snapshot\_retention\_limit](#input\_snapshot\_retention\_limit) | The number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. | `number` | `0` | no |
 | <a name="input_snapshot_window"></a> [snapshot\_window](#input\_snapshot\_window) | The daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. | `string` | `"06:30-07:30"` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnet ids which will be used for creating redis cluster | `list(string)` | `[]` | no |
-| <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit (tls/ssl) | `bool` | `false` | no |
+| <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit (tls/ssl). It is required to set var.transit\_encryption\_mode to not empty value when we enable in-transit encryption(var.transit\_encryption\_enabled=true) on existing cluster | `bool` | `false` | no |
+| <a name="input_transit_encryption_mode"></a> [transit\_encryption\_mode](#input\_transit\_encryption\_mode) | This option being used to migrate to in-transit encryption(var.transit\_encryption\_enabled=true) with no downtime. It is required to set this attribute when we enable in-transit encryption on existing cluster. Valid values are preferred and required. | `string` | `null` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The vpc where redis cluster will be created | `string` | n/a | yes |
 
 ## Outputs

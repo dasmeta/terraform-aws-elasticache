@@ -15,6 +15,7 @@ module "redis" {
   family                               = var.family
   at_rest_encryption_enabled           = var.at_rest_encryption_enabled
   transit_encryption_enabled           = var.transit_encryption_enabled
+  transit_encryption_mode              = var.transit_encryption_mode
   parameter                            = var.parameters
   cluster_mode_enabled                 = var.cluster_mode_enabled
   cluster_mode_num_node_groups         = var.cluster_mode_num_node_groups

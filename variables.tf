@@ -71,7 +71,13 @@ variable "at_rest_encryption_enabled" {
 variable "transit_encryption_enabled" {
   type        = bool
   default     = false
-  description = "Whether to enable encryption in transit (tls/ssl)"
+  description = "Whether to enable encryption in transit (tls/ssl). It is required to set var.transit_encryption_mode to not empty value when we enable in-transit encryption(var.transit_encryption_enabled=true) on existing cluster"
+}
+
+variable "transit_encryption_mode" {
+  type        = string
+  default     = null
+  description = "This option being used to migrate to in-transit encryption(var.transit_encryption_enabled=true) with no downtime. It is required to set this attribute when we enable in-transit encryption on existing cluster. Valid values are 'preferred' and 'required'. In case of if we also need to set auth_token then the value of this option should be set 'required'"
 }
 
 variable "parameters" {
@@ -157,7 +163,7 @@ variable "final_snapshot_identifier" {
 
 variable "auth_token" {
   type        = string
-  description = "Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` if you need to have `var.auth_token` password be applied/set"
+  description = "Auth-token/password for redis, it must be longer than 16 chars. NOTE that the `var.transit_encryption_enabled` should be set to `true` prior(already in place) if you need to have `var.auth_token` password be applied/set"
   default     = null
 }
 

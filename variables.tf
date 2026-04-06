@@ -151,8 +151,8 @@ variable "snapshot_window" {
 
 variable "maintenance_window" {
   type        = string
-  description = "The weekly time range (in UTC) during which system maintenance can occur. Format: ddd:hh:mm-ddd:hh:mm."
-  default     = null
+  default     = "Mon:01:00-Mon:02:00"
+  description = "The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'"
 }
 
 variable "snapshot_retention_limit" {

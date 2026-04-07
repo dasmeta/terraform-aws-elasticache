@@ -149,6 +149,12 @@ variable "snapshot_window" {
   default     = "06:30-07:30"
 }
 
+variable "maintenance_window" {
+  type        = string
+  default     = "Mon:02:00-Mon:03:00"
+  description = "The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'"
+}
+
 variable "snapshot_retention_limit" {
   type        = number
   description = "The number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them."

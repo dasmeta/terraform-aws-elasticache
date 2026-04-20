@@ -16,8 +16,14 @@ variable "subnet_ids" {
 
 variable "availability_zones" {
   type        = list(string)
-  description = "The list of availability zones which will be used for creating redis cluster"
   default     = []
+  description = "The list of availability zones which will be used for creating redis cluster"
+}
+
+variable "multi_az_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to enable Multi-AZ for the Redis replication group"
 }
 
 variable "allowed_security_group_ids" {

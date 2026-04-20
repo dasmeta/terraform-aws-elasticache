@@ -8,9 +8,11 @@ module "redis" {
   source  = "dasmeta/elasticache/aws"
   version = "x.y.z"
 
-  name         = "test-redis"
-  vpc_id       = {aws-vpc-id}
-  subnet_ids   = {aws-subnet-ids}
+  name               = "test-redis"
+  vpc_id             = {aws-vpc-id}
+  subnet_ids         = {aws-subnet-ids}
+  availability_zones = ["eu-central-1a", "eu-central-1b"]
+  multi_az_enabled   = true
 }
 ```
 
@@ -61,6 +63,7 @@ No resources.
 | <a name="input_final_snapshot_identifier"></a> [final\_snapshot\_identifier](#input\_final\_snapshot\_identifier) | The name of your final node group (shard) snapshot. ElastiCache creates the snapshot from the primary node in the cluster. If omitted, no final snapshot will be made. | `string` | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The nodes instance type in cluster | `string` | `"cache.t2.micro"` | no |
 | <a name="input_log_delivery_configuration"></a> [log\_delivery\_configuration](#input\_log\_delivery\_configuration) | Allows configure Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks. | `list(map(any))` | `[]` | no |
+| <a name="input_multi_az_enabled"></a> [multi\_az\_enabled](#input\_multi\_az\_enabled) | Whether to enable Multi-AZ for the Redis replication group | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of redis cluster | `string` | n/a | yes |
 | <a name="input_parameters"></a> [parameters](#input\_parameters) | A list of ElastiCache parameters to apply | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_snapshot_arns"></a> [snapshot\_arns](#input\_snapshot\_arns) | A single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. Example: arn:aws:s3:::my\_bucket/snapshot1.rdb | `list(string)` | `[]` | no |

@@ -8,9 +8,11 @@ module "redis" {
   source  = "dasmeta/elasticache/aws"
   version = "x.y.z"
 
-  name         = "test-redis"
-  vpc_id       = {aws-vpc-id}
-  subnet_ids   = {aws-subnet-ids}
+  name               = "test-redis"
+  vpc_id             = {aws-vpc-id}
+  subnet_ids         = {aws-subnet-ids}
+  availability_zones = ["eu-central-1a", "eu-central-1b"]
+  multi_az_enabled   = true
 }
 ```
 
@@ -18,7 +20,7 @@ module "redis" {
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.47, < 6.0.0 |
 
@@ -29,7 +31,7 @@ No providers.
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_alarms"></a> [alarms](#module\_alarms) | ./modules/alarms/ | n/a |
 | <a name="module_redis"></a> [redis](#module\_redis) | cloudposse/elasticache-redis/aws | 1.9.0 |
 
@@ -40,9 +42,9 @@ No resources.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_additional_security_group_rules"></a> [additional\_security\_group\_rules](#input\_additional\_security\_group\_rules) | A list of Security Group rule objects to add to the created security group, in addition to the ones this module normally creates | `list(any)` | `[]` | no |
-| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connections crosses | <pre>object({<br>    enabled       = optional(bool, true)<br>    topic         = string<br>    custom_values = optional(any, {})<br>  })</pre> | n/a | yes |
+| <a name="input_alarms"></a> [alarms](#input\_alarms) | Monitor cluster redis nodes and send alarm to specified topic if memory/cpu/connections crosses | <pre>object({<br/>    enabled       = optional(bool, true)<br/>    topic         = string<br/>    custom_values = optional(any, {})<br/>  })</pre> | n/a | yes |
 | <a name="input_allowed_security_group_ids"></a> [allowed\_security\_group\_ids](#input\_allowed\_security\_group\_ids) | The security groups which allowed-to/opened access redis cluster | `list(string)` | `[]` | no |
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Whether to apply the changes immediately | `bool` | `true` | no |
 | <a name="input_associated_security_group_ids"></a> [associated\_security\_group\_ids](#input\_associated\_security\_group\_ids) | Security group ids to associate/use for in case you have them created already and do not want to use new created one by setting create\_security\_group=false | `list(string)` | `[]` | no |
@@ -61,8 +63,10 @@ No resources.
 | <a name="input_final_snapshot_identifier"></a> [final\_snapshot\_identifier](#input\_final\_snapshot\_identifier) | The name of your final node group (shard) snapshot. ElastiCache creates the snapshot from the primary node in the cluster. If omitted, no final snapshot will be made. | `string` | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The nodes instance type in cluster | `string` | `"cache.t2.micro"` | no |
 | <a name="input_log_delivery_configuration"></a> [log\_delivery\_configuration](#input\_log\_delivery\_configuration) | Allows configure Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks. | `list(map(any))` | `[]` | no |
+| <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00' | `string` | `"Mon:02:00-Mon:03:00"` | no |
+| <a name="input_multi_az_enabled"></a> [multi\_az\_enabled](#input\_multi\_az\_enabled) | Whether to enable Multi-AZ for the Redis replication group | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of redis cluster | `string` | n/a | yes |
-| <a name="input_parameters"></a> [parameters](#input\_parameters) | A list of ElastiCache parameters to apply | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_parameters"></a> [parameters](#input\_parameters) | A list of ElastiCache parameters to apply | <pre>list(object({<br/>    name  = string<br/>    value = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_snapshot_arns"></a> [snapshot\_arns](#input\_snapshot\_arns) | A single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. Example: arn:aws:s3:::my\_bucket/snapshot1.rdb | `list(string)` | `[]` | no |
 | <a name="input_snapshot_name"></a> [snapshot\_name](#input\_snapshot\_name) | The name of a snapshot from which to restore data into the new node group. Changing the snapshot\_name forces a new resource. | `string` | `null` | no |
 | <a name="input_snapshot_retention_limit"></a> [snapshot\_retention\_limit](#input\_snapshot\_retention\_limit) | The number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. | `number` | `0` | no |
@@ -75,7 +79,7 @@ No resources.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_arn"></a> [arn](#output\_arn) | Elasticache Replication Group ARN |
 | <a name="output_cluster_enabled"></a> [cluster\_enabled](#output\_cluster\_enabled) | Indicates if cluster mode is enabled |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | Redis primary or configuration endpoint, whichever is appropriate for the given cluster mode |

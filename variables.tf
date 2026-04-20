@@ -20,6 +20,12 @@ variable "availability_zones" {
   default     = []
 }
 
+variable "multi_az_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to enable Multi-AZ for the Redis replication group"
+}
+
 variable "allowed_security_group_ids" {
   type        = list(string)
   default     = []

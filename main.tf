@@ -6,6 +6,7 @@ module "redis" {
   vpc_id                               = var.vpc_id
   subnets                              = var.subnet_ids
   availability_zones                   = var.availability_zones
+  multi_az_enabled                     = var.multi_az_enabled
   allowed_security_group_ids           = var.allowed_security_group_ids
   cluster_size                         = var.cluster_size
   instance_type                        = var.instance_type

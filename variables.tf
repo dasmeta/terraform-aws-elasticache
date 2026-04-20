@@ -16,8 +16,8 @@ variable "subnet_ids" {
 
 variable "availability_zones" {
   type        = list(string)
-  default     = []
   description = "The list of availability zones which will be used for creating redis cluster"
+  default     = []
 }
 
 variable "multi_az_enabled" {
